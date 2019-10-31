@@ -24,7 +24,9 @@ class ProductPage(BasePage):
 
     def should_name_comparison(self):
         product_name = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME).text
-        basket_name = self.browser.find_element(*ProductPageLocators.PRODUCT_BASKET)
-
-        print(basket_name, product_name)
-        assert product_name in basket_name.text, "Name in basket and product are not equal"
+        basket_name = self.browser.find_elements(*ProductPageLocators.PRODUCT_BASKET)
+        val = False
+        for i in basket_name:
+            if i.text == product_name:
+                val = True
+        assert val, "Name in basket and product are not equal"
