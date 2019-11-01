@@ -13,8 +13,6 @@ class BasePage():
         self.url = url
         self.browser.implicitly_wait(timeout)
 
-
-
     def is_element_present(self, how, what):
         try:
             self.browser.find_element(how, what)
@@ -29,7 +27,6 @@ class BasePage():
             return True
         return False
 
-
     def is_disappeared(self, how, what, timeout=4):
         try:
             WebDriverWait(self.browser, timeout, 1, TimeoutException).until_not(
@@ -38,9 +35,10 @@ class BasePage():
             return False
 
         return True
+
     def go_to_basket_page(self):
         button_basket = self.browser.find_element(*BasePageLocators.BASKET_WATCH)
-        button_basket .click()
+        button_basket.click()
 
     def go_to_login_page(self):
         link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
@@ -65,3 +63,7 @@ class BasePage():
             alert.accept()
         except NoAlertPresentException:
             print("No second alert presented")
+
+    def should_be_authorized_user(self):
+        assert self.is_element_present(
+            *BasePageLocators.USER_ICON), "User icon is not presented,probably unauthorised user"
